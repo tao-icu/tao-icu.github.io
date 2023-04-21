@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+  
+  <title>mysql | tao-icu</title>
+  <meta name="author" content="WangTao" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="mysql1、索引（高效获取数据） 调优B+树innodb 中索引用的B+树 ①mysql如何实现索引机制 MySQL中索引分三类：B+树索引、Hash索引、全文索引 ② InnoDB索引与MyISAM索引实现的区别是什么？ ​		InnoDB：存储时数据和索引放在一起。MyISAM索引单独放一个文件 ​		 2、架构2、事务3、日志4、开发sql语法基础distinct 去重 IFNULL 12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql">
+<meta property="og:url" content="http://example.com/2023/03/08/mysql/index.html">
+<meta property="og:site_name" content="tao-icu">
+<meta property="og:description" content="mysql1、索引（高效获取数据） 调优B+树innodb 中索引用的B+树 ①mysql如何实现索引机制 MySQL中索引分三类：B+树索引、Hash索引、全文索引 ② InnoDB索引与MyISAM索引实现的区别是什么？ ​		InnoDB：存储时数据和索引放在一起。MyISAM索引单独放一个文件 ​		 2、架构2、事务3、日志4、开发sql语法基础distinct 去重 IFNULL 12">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/20210624163143733.png">
+<meta property="og:image" content="http://example.com/img/20210624163204336.png">
+<meta property="og:image" content="http://example.com/img/20210624163234180.png">
+<meta property="article:published_time" content="2023-03-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-21T04:08:35.458Z">
+<meta property="article:author" content="WangTao">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/20210624163143733.png">
+  
+  <!-- 站点验证相关 -->
+  
+    
+    
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/aplayer@1.10.1/dist/APlayer.min.css"></script>
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+    <script src="/vendors/qrcode_js@1.0.0/qrcode.min.js"></script>
+  
+  
+  <style>
+    
+    
+  </style>
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">tao-icu</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>tao-icu</h2> <br />
+                        <span>It is never too late to learn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/08/mysql/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">mysql</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2023-03-07T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2023-03-08</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">WangTao</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        1134
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1682050115458"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h1 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h1><h2 id="1、索引（高效获取数据）-调优"><a href="#1、索引（高效获取数据）-调优" class="headerlink" title="1、索引（高效获取数据） 调优"></a>1、索引（高效获取数据） 调优</h2><h4 id="B-树"><a href="#B-树" class="headerlink" title="B+树"></a>B+树</h4><p>innodb 中索引用的B+树</p>
+<p><strong>①mysql如何实现索引机制</strong></p>
+<p>MySQL中索引分三类：B+树索引、Hash索引、全文索引</p>
+<p><strong>② InnoDB索引与MyISAM索引实现的区别是什么？</strong></p>
+<p>​		InnoDB：存储时数据和索引放在一起。MyISAM索引单独放一个文件</p>
+<p>​		</p>
+<h2 id="2、架构"><a href="#2、架构" class="headerlink" title="2、架构"></a>2、架构</h2><h2 id="2、事务"><a href="#2、事务" class="headerlink" title="2、事务"></a>2、事务</h2><h2 id="3、日志"><a href="#3、日志" class="headerlink" title="3、日志"></a>3、日志</h2><h2 id="4、开发"><a href="#4、开发" class="headerlink" title="4、开发"></a>4、开发</h2><h1 id="sql语法"><a href="#sql语法" class="headerlink" title="sql语法"></a>sql语法</h1><h4 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h4><p><strong>distinct</strong> 去重</p>
+<p><strong>IFNULL</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> IFNULL(WH_REMARK,<span class="number">6</span>) WH_REMARK <span class="keyword">from</span> fm_warehouse</span><br><span class="line"><span class="comment">-- 如果为空,将查询结果设为6</span></span><br></pre></td></tr></table></figure>
+
+<p>查询常数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> &quot;常数&quot;  <span class="keyword">from</span> fm_warehouse</span><br><span class="line"> <span class="comment">-- 结果：</span></span><br><span class="line">常数</span><br><span class="line">常数</span><br><span class="line">常数</span><br><span class="line">常数</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> OBJ_SEQNO <span class="keyword">from</span> fm_warehouse <span class="keyword">ORDER</span> <span class="keyword">BY</span> OBJ_SEQNO <span class="keyword">desc</span> <span class="comment">-- (降序) -- ASC(升序)</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="operator">*</span><span class="operator">*</span> 默认升序</span><br><span class="line"><span class="comment">-- 结果</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="comment">-- 没有使用排序操作 默认情况下时按照 添加数据的顺序 显示</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>分页</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 关键字 LIMIT x,y x偏移量0开始，y需要的数量</span></span><br><span class="line"><span class="comment">-- 需求：每页显示 y 条数据 第n页</span></span><br><span class="line">	LIMIT（n <span class="operator">-</span> <span class="number">1</span>）<span class="operator">*</span> y,y</span><br></pre></td></tr></table></figure>
+
+<h4 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h4><p>笛卡尔积（交叉连接）</p>
+<p>1、左连接(left join) – 取 左表 + 共同数据（<a target="_blank" rel="noopener" href="https://img-blog.csdnimg.cn/20210624163143733.png%EF%BC%89">https://img-blog.csdnimg.cn/20210624163143733.png）</a></p>
+<p><img src="/img/20210624163143733.png" alt="img"></p>
+<p>2、右连接 right join – 右表 + 共同数据</p>
+<p><img src="/img/20210624163204336.png" alt="img"></p>
+<p>3、内连接(inner join) inner 可省略  – AB表的交集</p>
+<p><img src="/img/20210624163234180.png" alt="img"></p>
+<p>4、 union：会对两个结果集进行并集操作，不包括重复行，同时进行默认规则的排序。</p>
+<p> 5、union all：对两个结果集进行并集操作，包括重复行，不会对结果进行排序。</p>
+<h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> CONCAT(PD_NAME,PD_CODE) <span class="keyword">FROM</span> gari_app.fm_product</span><br><span class="line"><span class="comment">--test_蕹菜195358335511697413</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h5><p>AVG SUM MIN MAX COUNT</p>
+<p>GROUP BY  having</p>
+<p><strong>1. 当在一个SQL中同时使用where和group by和having子句时，其执行顺序为：where&gt;group by&gt;having。</strong></p>
+<p><strong>2. where子句作用于表或者视图，having子句作用于组，having子句必须作用在group by之后。</strong></p>
+<h4 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h4><p>一个或多个表的数据的逻辑显示，不存储数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE view xx [字段] AS  查询语句</span><br></pre></td></tr></table></figure>
+
+<h1 id="面经"><a href="#面经" class="headerlink" title="面经"></a>面经</h1></div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2023/03/08/mysql/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2023/03/08/mysql/";
+            const title         = "「mysql」";
+            const excerpt       = `mysql1、索引（高效获取数据） 调优B+树innodb 中索引用的B+树
+①mysql如何实现索引机制
+MySQL中索引分三类：B+树索引、Hash索引、全文索引
+② InnoDB索引与MyISAM索引实现的区别是什么？
+​		I...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+                <div class="pull-date">
+                    <time datetime="2023-04-21T04:08:35.458Z" itemprop="dateModified">最后编辑：2023-04-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 函数式编程" href="/2022/01/07/函数式编程/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" springboot" href="/2023/03/08/springboot/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">--</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                11
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                4
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                0
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%86%E6%9E%B6%E7%9B%B8%E5%85%B3/">框架相关</a><span class="category-list-count">4</span></li></ul>
+  </aside>
+
+
+            
+                
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2023/03/08/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"><i class="fa  fa-book"></i> 正则表达式</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/03/08/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/"><i class="fa  fa-book"></i> 定时任务</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/03/08/JVM/"><i class="fa  fa-book"></i> jvm</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/03/08/streaml%E7%BB%83%E4%B9%A0/"><i class="fa  fa-book"></i> 练习</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2023/03/08/redis/"><i class="fa  fa-book"></i> redis</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  class="ap-lrc"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        <!-- Keep for compatibility -->
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <!-- New links -->
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2023 tao-icu 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by WangTao.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+    <script defer src="/vendors/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    
+    <script defer src="/vendors/meting@2.0.1/dist/Meting.min.js"></script>
+    <meting-js
+        server="netease"
+        type="playlist"
+        id="3204190542"
+        order="random"
+        fixed="true"
+    >
+    </meting-js>
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

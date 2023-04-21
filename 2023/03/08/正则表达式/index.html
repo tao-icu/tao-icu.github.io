@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   
   
-  <title>搜索 | tao-icu</title>
+  <title>正则表达式 | tao-icu</title>
   <meta name="author" content="WangTao" />
   <meta http-equiv="Cache-Control" content="no-transform" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -16,13 +16,15 @@
   
     <meta name="keywords" content="" />
   
-  <meta name="description" content="--">
-<meta property="og:type" content="website">
-<meta property="og:title" content="搜索">
-<meta property="og:url" content="http://example.com/search/index.html">
+  <meta name="description" content="规则**.** - 除换行符以外的所有字符。 **^** - 字符串开头。 **$** - 字符串结尾。 \d,\w,\s - 匹配数字、字符、空格。 \D,\W,\S - 匹配非数字、非字符、非空格。 **[abc]** - 匹配 a、b 或 c 中的一个字母。 **[a-z]** - 匹配 a 到 z 中的一个字母。 **[^abc]** - 匹配除了 a、b 或 c 中的其他字母。 **aa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://example.com/2023/03/08/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
 <meta property="og:site_name" content="tao-icu">
-<meta property="og:description" content="--">
+<meta property="og:description" content="规则**.** - 除换行符以外的所有字符。 **^** - 字符串开头。 **$** - 字符串结尾。 \d,\w,\s - 匹配数字、字符、空格。 \D,\W,\S - 匹配非数字、非字符、非空格。 **[abc]** - 匹配 a、b 或 c 中的一个字母。 **[a-z]** - 匹配 a 到 z 中的一个字母。 **[^abc]** - 匹配除了 a、b 或 c 中的其他字母。 **aa">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-03-13T09:47:06.137Z">
 <meta property="article:author" content="WangTao">
 <meta name="twitter:card" content="summary">
   
@@ -116,34 +118,173 @@
 
         
 
-            <div class="kratos-hentry kratos-post-inner clearfix">
-    <div class="kratos-post-content">
-        <h2 class="title-h2 text-center">搜索</h2>
-        <form class="input-group" onsubmit="return inpSearch();">
-            <input class="form-input input-lg" id="search-input" maxlength="80" name="s" placeholder="有什么想找找看的呢o(*￣▽￣*)ブ" required type="search">
-            <button class="btn btn-primary" type="submit">找一找~</button>
-        </form>
-    </div>
-</div>
-
-<div class="alert alert-info" id="kr-search-notice">
-    这里是 tao-icu 的搜索引擎~
-</div>
-
-<div id="result-posts">
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/08/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
     <div class="kratos-hentry kratos-post-inner clearfix">
-        <div class="kratos-post-content">
-            <p>搜索多个关键词时请用空格分割，例如「」这样；</p>
-            <p>您也可以使用这些标签碰碰运气哦~</p>
-            <p class="search-demo-tags">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">正则表达式</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2023-03-07T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2023-03-08</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">WangTao</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        537
+                    
+                    字
+                </li>
                 
-            </p>
-        </div>
-    </div>
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1678700826137"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h2><p><code>**.**</code> - 除换行符以外的所有字符。</p>
+<p><code>**^**</code> - 字符串开头。</p>
+<p><code>**$**</code> - 字符串结尾。</p>
+<p><strong><code>\d</code>,<code>\w</code>,<code>\s</code></strong> - 匹配数字、字符、空格。</p>
+<p><strong><code>\D</code>,<code>\W</code>,<code>\S</code></strong> - 匹配非数字、非字符、非空格。</p>
+<p><code>**[abc]**</code> - 匹配 a、b 或 c 中的一个字母。</p>
+<p><code>**[a-z]**</code> - 匹配 a 到 z 中的一个字母。</p>
+<p><code>**[^abc]**</code> - 匹配除了 a、b 或 c 中的其他字母。</p>
+<p><code>**aa|bb**</code> - 匹配 aa 或 bb。</p>
+<p><code>**?**</code> - 0 次或 1 次匹配。</p>
+<p><code>*****</code> - 匹配 0 次或多次。</p>
+<p><code>**+**</code> - 匹配 1 次或多次。</p>
+<p><code>**&#123;\*n\*&#125;**</code> - 匹配 <em>n</em>次。</p>
+<p><code>**&#123;\*n\*,&#125;**</code> - 匹配 <em>n</em>次以上。</p>
+<p><code>**&#123;\*m\*,\*n\*&#125;**</code> - 最少 <em>m</em> 次，最多 <em>n</em> 次匹配。</p>
+<p><strong><code>(</code>*expr*<code>)</code></strong> - 捕获 <em>expr</em> 子模式,以 <code>\1</code> 使用它。</p>
+<p><strong><code>(?:</code>*expr*<code>)</code></strong> - 忽略捕获的子模式。</p>
+<p><strong><code>(?=</code>*expr*<code>)</code></strong> - 正向预查模式 <em>expr</em>。</p>
+<p><strong><code>(?!</code>*expr*<code>)</code></strong> - 负向预查模式 <em>expr</em>。</p>
+<p>工具：</p>
+<p>[<a target="_blank" rel="noopener" href="http://tool.rbtree.cn/regtool/]">http://tool.rbtree.cn/regtool/]</a>: </p>
 </div>
-
-<script>var searchDataFile = "/search.json";</script>
-<script defer src="/js/local-search.min.js"></script>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <h5 itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</h5>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+                <div class="post-like-donate text-center clearfix" id="post-like-donate">
+                
+                
+                    <a class="share" href="javascript:;"><i class="fa fa-share-alt"></i> 分享</a>
+                    <div class="share-wrap" style="display: none;">
+    <div class="share-group">
+        <a href="javascript:;" class="share-plain qq" onclick="share('qq');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-qq"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain qzone" onclick="share('qzone');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-star"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weixin pop style-plain" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weixin"></i>
+            </div>
+            <div class="share-int">
+                <div class="qrcode" id="wechat-qr"></div>
+                <p>打开微信“扫一扫”，打开网页后点击屏幕右上角分享按钮</p>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain weibo" onclick="share('weibo');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-weibo"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain facebook style-plain" onclick="share('facebook');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-facebook"></i>
+            </div>
+        </a>
+        <a href="javascript:;" class="share-plain twitter style-plain" onclick="share('twitter');" rel="nofollow">
+            <div class="icon-wrap">
+                <i class="fa fa-twitter"></i>
+            </div>
+        </a>
+    </div>
+    <script type="text/javascript">
+        $(()=>{
+            new QRCode("wechat-qr", {
+                text: "http://example.com/2023/03/08/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/",
+                width: 150,
+                height: 150,
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        });
+        function share(dest) {
+            const qqBase        = "https://connect.qq.com/widget/shareqq/index.html?";
+            const weiboBase     = "https://service.weibo.com/share/share.php?";
+            const qzoneBase     = "https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?";
+            const facebookBase  = "https://www.facebook.com/sharer/sharer.php?";
+            const twitterBase   = "https://twitter.com/intent/tweet?";
+            const hostUrl       = "http://example.com/2023/03/08/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/";
+            const title         = "「正则表达式」";
+            const excerpt       = `规则**.** - 除换行符以外的所有字符。
+**^** - 字符串开头。
+**$** - 字符串结尾。
+\d,\w,\s - 匹配数字、字符、空格。
+\D,\W,\S - 匹配非数字、非字符、非空格。
+**[abc]** - 匹配 ...`;
+            let _URL;
+            switch (dest) {
+                case "qq"       : _URL = qqBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";     break;
+                case "weibo"    : _URL = weiboBase+"url="+hostUrl+"&title="+title+excerpt;                                 break;
+                case "qzone"    : _URL = qzoneBase+"url="+hostUrl+"&title="+title+"&desc=&summary="+excerpt+"&site=cxpy";  break;
+                case "facebook" : _URL = facebookBase+"u="+hostUrl;                                                        break;
+                case "twitter"  : _URL = twitterBase+"text="+title+excerpt+"&url="+hostUrl;                                break;
+            }
+            window.open(_URL);
+        };
+    </script>
+</div>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+                <div class="pull-date">
+                    <time datetime="2023-03-13T09:47:06.137Z" itemprop="dateModified">最后编辑：2023-03-13</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 定时任务" href="/2023/03/08/定时任务/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+</article>
 
         
 
@@ -156,8 +297,6 @@
 
 <section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
     <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
-    
-        <div class="sticky-area">
     
     
                 <aside id="krw-about" class="widget widget-kratos-about clearfix">
@@ -198,6 +337,8 @@
     </div>
 </aside>
             
+                    <div class="sticky-area">
+                
                 
   <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
     <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
